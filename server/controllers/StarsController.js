@@ -1,4 +1,5 @@
 import { dbContext } from "../db/DbContext";
+import { planetService } from "../services/PlanetService";
 import { starService } from "../services/StarService";
 import BaseController from "../utils/BaseController";
 
@@ -10,6 +11,7 @@ export class StarsController extends BaseController{
         this.router
         .get('', this.getAll)
         .get('/:id', this.getByOne)
+        .get('/:id/planets', this.getPlanets)
         .post('', this.create)
     }
 
@@ -38,6 +40,15 @@ export class StarsController extends BaseController{
         try {
             const star = starService.create(req.body)
             return res.send(star)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getPlanets(req, res, next){
+        try {
+            const planets = await planetService.getAll({StarId : req.params.id})
+            return res.send(planets)
         } catch (error) {
             next(error)
         }
