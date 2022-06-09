@@ -18,7 +18,12 @@ class StarService{
         const star = await dbContext.Star.create(body)
         return star
     }
-
+    
+    async remove(id) {
+        const original = await dbContext.Star.findById(id)
+        original.remove()
+        return `deleted ${original.name}`
+    }
 
 }
 

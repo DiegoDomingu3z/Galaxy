@@ -13,12 +13,18 @@ class PlanetService{
     async getByOne(id) {
         return await dbContext.Planet.findById(id)
     }
+    
 
-
-
+    
     async create(body) {
         return await dbContext.Planet.create(body)
     }
+    
+    async remove(id) {
+    const original = await dbContext.Planet.findById(id)
+    await original.remove()
+    return `delorted ${original.name}`
+}
 
 }
 
